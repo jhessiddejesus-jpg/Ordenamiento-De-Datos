@@ -1,0 +1,106 @@
+.hero {
+  position: relative;
+  min-height: calc(100svh - var(--topbar-h));
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__bars {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 70%;
+  z-index: -1;
+  opacity: 0.3;
+  mask-image: linear-gradient(to top, black 10%, transparent 95%);
+}
+
+.hero__bars i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: calc(100% / 36); /* ranura exacta: Hero.js la mueve con xPercent */
+}
+
+.hero__bars i::before {
+  content: '';
+  position: absolute;
+  inset: 0 3px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(to top, color-mix(in oklab, var(--text-dim) 4%, transparent), color-mix(in oklab, var(--text-dim) 45%, transparent));
+}
+
+.hero__bars i:nth-child(3n)::before {
+  background: linear-gradient(to top, color-mix(in oklab, var(--accent) 4%, transparent), color-mix(in oklab, var(--accent) 45%, transparent));
+}
+
+.hero__content { padding-block: 64px; }
+
+.hero__title {
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  font-weight: 600;
+  font-style: italic;
+  max-width: 12ch;
+  margin-bottom: 0.4em;
+  color: var(--text);
+}
+
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.split-word__inner {
+  display: inline-block;
+  color: inherit;
+}
+
+.hero__lead {
+  max-width: 560px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  width: 26px;
+  height: 42px;
+  margin-left: -13px;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+}
+
+.hero__scroll span {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: scroll-hint 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll span { animation: none; }
+}
+
+@keyframes scroll-hint {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { opacity: 0; }
+}

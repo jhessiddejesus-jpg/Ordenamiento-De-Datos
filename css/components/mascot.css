@@ -1,0 +1,75 @@
+/* Bit, la guía animada del visualizador (posición y saltos: js/ui/Mascot.js) */
+.mascot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.mascot[hidden] { display: none; }
+
+.mascot__figure {
+  display: block;
+  overflow: visible;
+  transform-origin: 50% 100%; /* estira y aplasta desde los pies */
+}
+
+/* Mirar hacia donde salta: propiedad `scale` independiente del transform que anima GSAP */
+.mascot.is-facing-left .mascot__figure { scale: -1 1; }
+
+.mascot__body { fill: var(--accent); }
+.mascot__face { fill: var(--on-accent); }
+.mascot__eye { fill: var(--c-lifted); }
+.mascot__mouth { fill: none; stroke: var(--on-accent); stroke-width: 1.6; stroke-linecap: round; }
+.mascot__antenna { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+.mascot__tip { fill: var(--accent-2); }
+.mascot__foot { fill: color-mix(in oklab, var(--accent) 55%, var(--bg)); }
+
+.mascot__eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascot-blink 4.2s infinite;
+}
+
+/* Parpadeo: CSS (fuera del hilo principal), casi todo el ciclo con los ojos abiertos */
+@keyframes mascot-blink {
+  0%, 92%, 100% { scale: 1 1; }
+  95% { scale: 1 0.1; }
+}
+
+.mascot__bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.mascot__bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  border: 4px solid transparent;
+  border-top-color: var(--text);
+}
+
+.mascot.has-bubble .mascot__bubble { opacity: 1; }
+.mascot__bubble:empty { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot__eyes { animation: none; }
+}

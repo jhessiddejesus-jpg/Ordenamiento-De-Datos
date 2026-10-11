@@ -1,0 +1,179 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--topbar-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  line-height: 1.12;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.015em;
+}
+
+h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+h3 { font-size: 1.15rem; }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--accent); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 15%, transparent);
+  padding: 0.05em 0.4em;
+  border-radius: 6px;
+}
+
+button, select, input { font: inherit; color: inherit; }
+
+/* Táctil: sin destello gris, sin retraso de doble toque, sin seleccionar texto al mantener pulsado */
+button, select, .btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button, .btn {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Feedback al presionar, común a todo lo pulsable (sutil: 0.97) */
+.btn:active,
+.chip-btn:active,
+.icon-btn:active,
+.lab__tab:active,
+.cnode--algo:active,
+.detail__close:active { scale: 0.97; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.muted { color: var(--text-muted); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.8em;
+}
+
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.8em 1.4em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--t-press), var(--t-lift), box-shadow var(--dur-ui) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { translate: 0 -2px; }
+  .btn--primary:hover { box-shadow: var(--shadow-soft); }
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--text);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--ghost {
+  border-color: var(--border);
+  color: var(--text);
+  background: color-mix(in oklab, var(--text) 2%, transparent);
+}
+
+.chip-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.4em 0.9em;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--t-press), var(--t-color);
+}
+
+.chip-btn.is-active {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip-btn:hover {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+  }
+}
+
+select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4em 0.8em;
+  font-size: 0.85rem;
+}
+
+input[type='range'] { accent-color: var(--accent); }
+
+/* iOS hace zoom en controles con letra < 16px (va después de la regla general de select) */
+@media (pointer: coarse) {
+  select, input { font-size: 16px; }
+}
+
+
+/* Movimiento reducido = menos y más suave, no cero: se quitan desplazamientos,
+   se conservan colores, opacidades y el feedback de presión. Cada componente
+   apaga además sus propios bucles decorativos. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .cnode--algo { translate: none !important; } /* sólo el levantar en hover; otros translate son de posición */
+}

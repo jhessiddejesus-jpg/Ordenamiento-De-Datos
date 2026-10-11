@@ -1,0 +1,53 @@
+.spotlight .card { border-color: var(--border-soft); }
+
+.passes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 24px;
+  border: 1px solid color-mix(in oklab, var(--new) 25%, transparent);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  perspective: 600px;
+}
+
+.passes__row {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.passes__label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.passes__cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.passes__cell {
+  min-width: 52px;
+  padding: 6px 8px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+@media (max-width: 560px) {
+  .passes__row { grid-template-columns: 1fr; gap: 6px; }
+  .passes__cell { min-width: 44px; font-size: 0.85rem; }
+}
+
+.spotlight__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}

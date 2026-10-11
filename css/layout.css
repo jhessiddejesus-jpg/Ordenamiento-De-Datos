@@ -1,0 +1,99 @@
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(64px, 10vw, 120px);
+}
+
+.section--wide { padding-inline: 0; }
+
+.section__head { max-width: 760px; margin-bottom: 2.5rem; }
+
+.section__lead {
+  color: var(--text-muted);
+  font-size: 1.08rem;
+}
+
+.grid { display: grid; gap: 20px; }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+
+/* Barra superior */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: calc(var(--topbar-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+  background: color-mix(in oklab, var(--bg) 72%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.topbar__logo {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+}
+
+.topbar__logo i {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.topbar__logo i:nth-child(1) { height: 30%; }
+.topbar__logo i:nth-child(2) { height: 55%; }
+.topbar__logo i:nth-child(3) { height: 78%; background: var(--accent-2); }
+.topbar__logo i:nth-child(4) { height: 100%; background: var(--accent-2); }
+
+.topbar__nav {
+  display: flex;
+  gap: clamp(8px, 2vw, 24px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topbar__nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .topbar__nav a:hover { color: var(--text); }
+}
+.topbar__new { color: var(--new) !important; }
+
+@media (max-width: 560px) {
+  .topbar__brand span:last-child { display: none; }
+}
+
+/* Pie */
+.footer {
+  padding-block: 48px 64px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

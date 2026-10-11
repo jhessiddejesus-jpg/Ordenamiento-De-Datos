@@ -1,0 +1,112 @@
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+.card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+.card__icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.callout {
+  margin-top: 24px;
+  padding: 20px 24px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.callout p { margin: 0; }
+.callout strong { color: var(--text); }
+
+.steps,
+.bullets {
+  padding-left: 1.2em;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.steps li,
+.bullets li { margin-bottom: 0.6em; }
+.steps strong,
+.bullets strong { color: var(--text); }
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 0 0 1em;
+}
+
+.facts div {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.facts dt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.facts dd {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+/* Big O y medidor de eficiencia (compartidos) */
+.big-o {
+  white-space: nowrap;
+  font-weight: 600;
+  border: 0;
+  background: color-mix(in oklab, var(--text) 5%, transparent);
+}
+
+.big-o--best { color: var(--o-best); }
+.big-o--average { color: var(--o-average); }
+.big-o--worst { color: var(--o-worst); }
+.big-o--space { color: var(--o-space); }
+
+.meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.meter__dots { display: inline-flex; gap: 3px; }
+
+.meter__dots i {
+  width: 14px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.meter__dots i.is-on { background: var(--accent); }
+.meter[data-score='1'] .meter__dots i.is-on { background: var(--o-worst); }
+.meter[data-score='2'] .meter__dots i.is-on { background: var(--c-pivot); }
+.meter[data-score='3'] .meter__dots i.is-on { background: var(--o-average); }

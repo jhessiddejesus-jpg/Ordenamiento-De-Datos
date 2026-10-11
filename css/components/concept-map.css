@@ -1,0 +1,175 @@
+.cmap {
+  position: relative;
+  padding: 8px var(--gutter) 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.cmap.is-scaled { overflow: hidden; }
+
+.cmap__hint {
+  display: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.cmap.is-scrollable + .cmap__hint { display: block; }
+
+.cmap__canvas {
+  position: relative;
+  width: max-content;
+  margin-inline: auto;
+  transform-origin: top left;
+}
+
+.cmap__links {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.cmap__links path {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.cmap__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cmap__label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+/* Árbol: flex anidado, los conectores se dibujan aparte */
+.cmap__tree,
+.cmap__tree ul {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cmap__tree li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cmap__tree li > ul { padding-top: 82px; }
+
+/* Tarjetas */
+.cnode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 196px;
+  padding: 16px;
+  text-align: center;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.cnode__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cnode__text {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.cnode--root {
+  width: 300px;
+  padding: 22px;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.cnode--root .cnode__title { font-size: 1.5rem; }
+.cnode--root .cnode__text { color: color-mix(in oklab, var(--bg) 75%, transparent); }
+
+.cnode--category {
+  width: 240px;
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: var(--surface);
+}
+
+.cnode--group {
+  border-color: var(--border);
+  background: var(--bg-soft);
+}
+
+.cnode--group.cnode--new,
+.cnode--group--new {
+  border-color: color-mix(in oklab, var(--new) 60%, var(--border));
+  background: var(--bg-soft);
+}
+
+.cnode--leaf { border-style: dashed; }
+
+.cnode--algo {
+  font: inherit;
+  cursor: pointer;
+  background: var(--surface);
+  /* Antes se transicionaba `transform` pero el hover cambiaba `translate`: nunca se animaba. */
+  transition: var(--t-press), var(--t-lift), border-color var(--dur-fast) ease, box-shadow var(--dur-ui) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cnode--algo:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-soft);
+    translate: 0 -3px;
+  }
+}
+
+.cnode--algo.cnode--new {
+  border-color: var(--new);
+}
+
+.cnode__family {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.cnode--new .cnode__family { color: var(--new); }
+
+
+.cnode__o {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cnode__o small {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ordenación · Mapa y Flujos</title>
+  <meta name="description" content="Mapa conceptual, diagramas de flujo animados y visualizador de los métodos de ordenación del capítulo 10 de Fundamentos de programación (Joyanes, 2020), más Radix Sort.">
+  <meta name="theme-color" content="#100e0c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23100e0c'/%3E%3Crect x='6' y='18' width='4' height='8' rx='1' fill='%23ceaf7d'/%3E%3Crect x='12' y='14' width='4' height='12' rx='1' fill='%23ceaf7d'/%3E%3Crect x='18' y='10' width='4' height='16' rx='1' fill='%23c18974'/%3E%3Crect x='24' y='6' width='4' height='20' rx='1' fill='%23c18974'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/hero.css">
+  <link rel="stylesheet" href="css/components/cards.css">
+  <link rel="stylesheet" href="css/components/concept-map.css">
+  <link rel="stylesheet" href="css/components/dialog.css">
+  <link rel="stylesheet" href="css/components/lab.css">
+  <link rel="stylesheet" href="css/components/flowchart.css">
+  <link rel="stylesheet" href="css/components/visualizer.css">
+  <link rel="stylesheet" href="css/components/mascot.css">
+  <link rel="stylesheet" href="css/components/compare.css">
+  <link rel="stylesheet" href="css/components/spotlight.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="topbar__brand" href="#inicio" aria-label="Inicio">
+      <span class="topbar__logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>Ordenación</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Secciones">
+      <a href="#lectura">Lectura</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#flujo">Flujo</a>
+      <a href="#comparativa">Comparativa</a>
+      <a href="#radix" class="topbar__new">Radix</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="hero__bars" data-hero-bars aria-hidden="true"></div>
+      <div class="hero__content container">
+        <p class="eyebrow">Capítulo 10 · Fundamentos de programación · Joyanes (2020)</p>
+        <h1 class="hero__title" data-split>Ordenar también es pensar</h1>
+        <p class="hero__lead">
+          Los métodos de ordenación del capítulo 10 en un mapa conceptual, con diagramas de flujo
+          que puedes ejecutar paso a paso. Al final, <strong>Radix Sort</strong>: un algoritmo que ordena sin comparar.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#mapa">Ver el mapa</a>
+          <a class="btn btn--ghost" href="#flujo">Ir al laboratorio</a>
+        </div>
+      </div>
+      <a class="hero__scroll" href="#lectura" aria-label="Bajar a la lectura"><span></span></a>
+    </section>
+
+    <!-- LECTURA -->
+    <section id="lectura" class="section container">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">01 · La lectura</p>
+        <h2>¿Qué significa ordenar?</h2>
+        <p class="section__lead">
+          Ordenar (o clasificar) es acomodar datos en una secuencia: de menor a mayor, de mayor a menor o en orden
+          alfabético. Junto con buscar e intercalar, es de lo que más tiempo ocupa a una computadora.
+        </p>
+      </header>
+
+      <div class="grid grid--3">
+        <article class="card" data-reveal>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>
+          <h3>Ordenación interna</h3>
+          <p>Trabaja con <strong>arrays</strong> en la memoria principal. Como se llega directo a cada posición, es rápida. Es la que estudia el capítulo.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+          <h3>Ordenación externa</h3>
+          <p>Trabaja con <strong>archivos</strong> en disco, cinta o la nube. Leer y escribir ahí es más lento, pero cabe mucha más información.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM4 19a2 2 0 0 1 2-2h12"/><path d="M9 7h6M9 11h4"/></svg></span>
+          <h3>¿Por qué estudiarla?</h3>
+          <p>Es una tarea tan común que conviene dominarla, y escribir un algoritmo de ordenación <em>bueno</em> es más difícil de lo que parece.</p>
+        </article>
+      </div>
+
+      <div class="callout" data-reveal>
+        <p><strong>Clasificado no es lo mismo que ordenado.</strong> En un conjunto <em>ordenado</em>, la posición de cada elemento
+        significa algo; uno <em>clasificado</em> se acomodó según sus valores. Así, <code>7 3 2 1 9 6 7 5 4</code> clasificado
+        de menor a mayor queda <code>1 2 3 4 5 6 7 7 9</code>, y los repetidos se conservan.</p>
+      </div>
+    </section>
+
+    <!-- MAPA CONCEPTUAL -->
+    <section id="mapa" class="section section--wide">
+      <header class="section__head container" data-reveal>
+        <p class="eyebrow">02 · Mapa conceptual</p>
+        <h2>Métodos de ordenación</h2>
+        <p class="section__lead">
+          Cada método aparece con una breve <strong>descripción</strong>, su <strong>Big O</strong> y su <strong>eficiencia</strong>.
+          Pulsa uno para ver el detalle.
+        </p>
+      </header>
+      <div class="cmap" data-concept-map></div>
+      <p class="cmap__hint container">Desliza para ver el mapa completo →</p>
+    </section>
+
+    <!-- LABORATORIO DE FLUJO -->
+    <section id="flujo" class="section container">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">03 · Diagramas de flujo</p>
+        <h2>Laboratorio animado</h2>
+        <p class="section__lead">
+          El diagrama, el pseudocódigo y el vector avanzan juntos. <strong>Bit</strong>, el pequeño robot,
+          salta sobre el elemento que se usa en cada paso.
+        </p>
+      </header>
+
+      <div class="lab" data-lab>
+        <div class="lab__tabs" role="tablist" aria-label="Algoritmo" data-lab-tabs></div>
+
+        <div class="lab__toolbar">
+          <div class="lab__transport" role="group" aria-label="Reproducción">
+            <button class="icon-btn" data-action="reset" title="Reiniciar" aria-label="Reiniciar">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>
+            </button>
+            <button class="icon-btn" data-action="prev" title="Paso anterior (←)" aria-label="Paso anterior">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M18 6l-8 6 8 6z"/></svg>
+            </button>
+            <button class="icon-btn icon-btn--play" data-action="toggle" title="Reproducir / pausar (espacio)" aria-label="Reproducir">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+            </button>
+            <button class="icon-btn" data-action="next" title="Paso siguiente (→)" aria-label="Paso siguiente">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 5v14M6 6l8 6-8 6z"/></svg>
+            </button>
+          </div>
+          <label class="lab__scrub">
+            <span class="visually-hidden">Progreso</span>
+            <input type="range" min="-1" max="0" value="-1" data-control="scrub">
+            <output data-output="progress">0 / 0</output>
+          </label>
+          <div class="lab__options">
+            <label class="lab__speed">
+              <span>Velocidad</span>
+              <input type="range" min="0.25" max="4" step="0.25" value="1" data-control="speed">
+              <output data-output="speed">1×</output>
+            </label>
+            <div class="lab__data" role="group" aria-label="Datos">
+              <button class="chip-btn" data-action="example">Ejemplo del libro</button>
+              <button class="chip-btn" data-action="shuffle">Aleatorio</button>
+              <select data-control="size" aria-label="Tamaño del vector">
+                <option value="6">n = 6</option>
+                <option value="8">n = 8</option>
+                <option value="10" selected>n = 10</option>
+                <option value="12">n = 12</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <p class="lab__keys"><kbd>Espacio</kbd> reproduce o pausa · <kbd>←</kbd> <kbd>→</kbd> avanzan de a un paso</p>
+
+        <div class="lab__grid">
+          <div class="panel panel--flow">
+            <div class="panel__head">
+              <h3>Diagrama de flujo</h3>
+              <span class="legend"><i class="legend__token"></i> paso actual</span>
+            </div>
+            <div class="flow-scroll" data-flowchart></div>
+          </div>
+
+          <div class="lab__side">
+            <div class="panel">
+              <div class="panel__head">
+                <h3 data-lab-title>Vector</h3>
+                <div class="stats" data-stats></div>
+              </div>
+              <p class="narration" data-narration aria-live="polite">Pulsa ▶ para empezar.</p>
+              <div class="viz" data-visualizer></div>
+              <div class="viz-foot">
+                <ul class="legend-list" data-legend aria-label="Qué significa cada color"></ul>
+                <button class="chip-btn chip-btn--toggle" data-action="mascot" aria-pressed="true" title="Mostrar u ocultar a Bit, la guía animada">Guía: Bit</button>
+              </div>
+              <div class="vars" data-vars></div>
+            </div>
+            <div class="panel">
+              <div class="panel__head"><h3>Pseudocódigo</h3></div>
+              <ol class="code" data-pseudocode></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARATIVA -->
+    <section id="comparativa" class="section container">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">04 · Comparativa</p>
+        <h2>Big O y eficiencia</h2>
+        <p class="section__lead">Lo que dice la teoría, comprobado con operaciones reales sobre un mismo vector.</p>
+      </header>
+      <div class="table-wrap" data-reveal>
+        <table class="ctable" data-complexity-table></table>
+      </div>
+
+      <div class="bench" data-benchmark data-reveal>
+        <div class="bench__head">
+          <h3>Carrera de operaciones</h3>
+          <div class="bench__controls" role="group" aria-label="Tamaño del vector para la carrera" data-bench-sizes></div>
+        </div>
+        <p class="bench__note" data-bench-note></p>
+        <div class="bench__rows" data-bench-rows></div>
+      </div>
+    </section>
+
+    <!-- RADIX SPOTLIGHT -->
+    <section id="radix" class="section container spotlight">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">05 · Más allá del capítulo</p>
+        <h2>Radix Sort: ordenar sin comparar</h2>
+        <p class="section__lead">
+          Todos los métodos del capítulo deciden comparando, como en <code>A[i] &gt; A[j]</code>. Radix Sort, que no vimos en clase,
+          hace algo distinto: reparte los números en 10 <strong>cubetas</strong> según un dígito, los vuelve a juntar en orden
+          y repite con el siguiente, de las unidades hacia arriba.
+        </p>
+      </header>
+
+      <div class="passes" data-radix-passes data-reveal></div>
+
+      <div class="grid grid--2">
+        <article class="card" data-reveal>
+          <h3>Cómo funciona</h3>
+          <ol class="steps">
+            <li>Busca el número mayor para saber cuántos dígitos (<code>d</code>) revisar.</li>
+            <li><strong>Reparte</strong> cada número en la cubeta del 0 al 9 que indica su dígito actual, empezando por las unidades.</li>
+            <li><strong>Recoge</strong> las cubetas de la 0 a la 9, en el mismo orden en que llegaron los números.</li>
+            <li>Repite con el siguiente dígito. Como cada pasada respeta el orden anterior, tras <code>d</code> pasadas el vector queda ordenado.</li>
+          </ol>
+        </article>
+        <article class="card" data-reveal>
+          <h3>Big O y eficiencia</h3>
+          <dl class="facts">
+            <div><dt>Tiempo (todos los casos)</dt><dd><code>O(d · (n + b))</code></dd></div>
+            <div><dt>Espacio</dt><dd><code>O(n + b)</code></dd></div>
+            <div><dt>Comparaciones</dt><dd><strong>0</strong></dd></div>
+            <div><dt>Estable</dt><dd>Sí</dd></div>
+          </dl>
+          <p class="muted">Si <code>d</code> es fijo (por ejemplo, enteros de 32 bits), el tiempo crece de forma <strong>lineal</strong> con <code>n</code>. Ningún método que compare puede bajar de Ω(n log n).</p>
+        </article>
+        <article class="card" data-reveal>
+          <h3>¿Por qué se conoce tan poco?</h3>
+          <ul class="bullets">
+            <li>Casi nunca se enseña en cursos introductorios: ordenar sin comparar va contra la intuición.</li>
+            <li>Solo funciona con claves que se dividen en dígitos: enteros, fechas, cadenas de longitud fija o direcciones IP.</li>
+            <li>Necesita memoria extra para las cubetas.</li>
+          </ul>
+        </article>
+        <article class="card" data-reveal>
+          <h3>Dónde se usa</h3>
+          <ul class="bullets">
+            <li><strong>Tarjetas gráficas:</strong> las bibliotecas Thrust y CUB de NVIDIA lo usan para ordenar millones de enteros en paralelo.</li>
+            <li><strong>Texto:</strong> para construir arreglos de sufijos, que sirven para buscar en genomas y comprimir datos.</li>
+            <li><strong>Varias claves:</strong> para ordenar fechas por día, luego por mes y luego por año, como en el ejercicio 10.4 del libro.</li>
+            <li><strong>Historia:</strong> las tabuladoras de Herman Hollerith ya ordenaban tarjetas perforadas columna por columna en el censo de EE. UU. de 1890. H. H. Seward lo llevó a las computadoras en 1954.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="spotlight__cta" data-reveal>
+        <button class="btn btn--primary" data-open-lab="radix">Verlo en el laboratorio</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p><strong>Referencia:</strong> Joyanes Aguilar, L. (2020). <em>Fundamentos de programación: algoritmos, estructura de datos y objetos</em> (5.ª ed.). McGraw-Hill. Capítulo 10: Ordenación, búsqueda e intercalación.</p>
+    <p class="muted">Hecho con HTML, CSS, JavaScript y GSAP.</p>
+  </footer>
+
+  <dialog class="detail" data-detail aria-labelledby="detail-title"></dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/*
+ * Paleta "Tinta y oro viejo": acentos de pigmento, no de luz.
+ * Definida en OKLCH para controlar a la vez luminosidad (L) y saturación (C):
+ * todos los acentos comparten L ≈ 0.68–0.83 y una C baja (≤ 0.075), por eso
+ * conviven sin "brillar". Contraste WCAG verificado (texto ≥ 5.3:1 en superficies).
+ * Todo color del sitio sale de aquí; los matices se derivan con color-mix().
+ */
+:root {
+  /* Superficies: tinta cálida casi neutra */
+  --bg: oklch(0.165 0.006 70);          /* #100e0c */
+  --bg-soft: oklch(0.185 0.006 70);     /* #141210 */
+  --surface: oklch(0.205 0.007 70);     /* #191714 */
+  --surface-2: oklch(0.235 0.008 70);   /* #211d1a */
+  --border: oklch(0.32 0.01 70);        /* #36322d */
+  --border-soft: oklch(0.27 0.008 70);  /* #292622 */
+
+  /* Texto: papel */
+  --text: oklch(0.93 0.012 85);         /* #ebe7df · 15.6:1 */
+  --text-muted: oklch(0.77 0.018 80);   /* #bab3a8 ·  9.3:1 */
+  --text-dim: oklch(0.66 0.02 78);      /* #999185 ·  6.2:1 */
+  --on-accent: oklch(0.2 0.01 70);      /* #191511 */
+
+  /* Acentos (pigmentos apagados) */
+  --accent: oklch(0.77 0.075 80);       /* oro viejo   #ceaf7d */
+  --accent-2: oklch(0.68 0.075 42);     /* arcilla     #c18974 */
+  --new: oklch(0.75 0.05 160);          /* eucalipto   #93b8a3 */
+
+  /* Estados del visualizador */
+  --c-bar-top: oklch(0.4 0.014 70);     /* grafito cálido #4d4740 */
+  --c-compare: oklch(0.83 0.065 88);    /* oro claro   #d9c697 */
+  --c-swap: var(--accent-2);
+  --c-sorted: var(--new);
+  --c-pivot: oklch(0.68 0.055 330);     /* malva       #ac8ca9 */
+  --c-min: oklch(0.72 0.045 235);       /* azul pizarra #8aaabd */
+  --c-lifted: oklch(0.89 0.025 85);     /* pergamino   #e2dac9 */
+
+  /* Big O */
+  --o-best: var(--new);
+  --o-average: var(--accent);
+  --o-worst: var(--accent-2);
+  --o-space: var(--c-min);
+
+  /* Diagrama de flujo: derivados de los acentos, mezclados con la superficie */
+  --flow-edge: var(--border);
+  --flow-arrow: color-mix(in oklab, var(--text-dim) 70%, var(--bg));
+  --flow-node: var(--surface);
+  --flow-node-stroke: color-mix(in oklab, var(--text-dim) 45%, var(--bg));
+  --flow-decision: color-mix(in oklab, var(--accent) 7%, var(--surface));
+  --flow-decision-stroke: color-mix(in oklab, var(--accent) 55%, var(--bg));
+  --flow-terminal: color-mix(in oklab, var(--new) 7%, var(--surface));
+  --flow-terminal-stroke: color-mix(in oklab, var(--new) 50%, var(--bg));
+  --flow-call: color-mix(in oklab, var(--accent-2) 7%, var(--surface));
+  --flow-call-stroke: color-mix(in oklab, var(--accent-2) 55%, var(--bg));
+  --flow-token: var(--text);
+
+  /* Sombra neutra (sin halos de color) */
+  --shadow-soft: 0 10px 24px -14px oklch(0 0 0 / 0.7);
+
+  /* Tipografía */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Movimiento (curvas de Emil Kowalski; GSAP las lee desde aquí en js/lib/motion.js) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* entradas, salidas, feedback */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);   /* movimiento dentro de la pantalla */
+  --dur-press: 160ms;   /* feedback al presionar */
+  --dur-fast: 200ms;    /* cambios de estado frecuentes (nodo activo, colores) */
+  --dur-ui: 250ms;      /* elementos de interfaz */
+  --dur-modal: 300ms;   /* diálogo */
+  --dur-reveal: 600ms;  /* revelado explicativo al hacer scroll */
+  --t-press: scale var(--dur-press) var(--ease-out);   /* al presionar */
+  --t-lift: translate var(--dur-ui) var(--ease-out);   /* hover que eleva */
+  --t-color: color var(--dur-fast) ease, background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+
+  /* Espaciado y forma */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --container: 1200px;
+  --topbar-h: 60px;
+}

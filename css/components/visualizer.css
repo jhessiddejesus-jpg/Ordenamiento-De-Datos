@@ -1,0 +1,130 @@
+.viz {
+  position: relative;
+  width: 100%;
+}
+
+.viz__stage {
+  position: relative;
+  width: 100%;
+  /* sin transición de height: es layout y, mientras dura, las cubetas pisan la leyenda */
+}
+
+/*
+ * Cada estado sólo cambia --bar-color / --bar-ink. El color va en background-color
+ * (interpolable: el cambio de estado se funde) y el sombreado es una capa fija encima.
+ * Antes eran degradados distintos por estado, que no se pueden transicionar y saltaban.
+ */
+.bar {
+  --bar-color: var(--c-bar-top);
+  --bar-ink: var(--text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px 8px 4px 4px;
+  background-color: var(--bar-color);
+  background-image: linear-gradient(to top, color-mix(in oklab, var(--bg) 55%, transparent), transparent 85%);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--text) 15%, transparent);
+  transition: background-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease, opacity var(--dur-ui) ease;
+  will-change: transform;
+}
+
+.bar__label {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.62rem, 1.6vw, 0.78rem);
+  font-weight: 600;
+  color: var(--bar-ink);
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease;
+}
+
+.bar.is-sorted { --bar-color: var(--c-sorted); --bar-ink: var(--on-accent); }
+.bar.is-min { --bar-color: var(--c-min); --bar-ink: var(--on-accent); }
+.bar.is-pivot { --bar-color: var(--c-pivot); --bar-ink: var(--on-accent); }
+
+.bar.is-lifted {
+  --bar-color: var(--c-lifted);
+  --bar-ink: var(--on-accent);
+  box-shadow: var(--shadow-soft);
+}
+
+.bar.is-compare {
+  --bar-color: var(--c-compare);
+  --bar-ink: var(--on-accent);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--c-compare); /* anillo nítido, sin resplandor */
+}
+
+.bar.is-dim { opacity: 0.25; }
+
+.bar.is-chip {
+  --bar-color: color-mix(in oklab, var(--new) 45%, var(--bg));
+  align-items: center;
+  border-radius: 6px;
+}
+
+.bar.is-chip .bar__label { margin-top: 0; }
+
+/* Dígitos (Radix) */
+.digit--pad { opacity: 0.35; }
+
+.digit--active {
+  color: var(--c-compare);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.viz__indices {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18px;
+  pointer-events: none;
+}
+
+.viz__indices span {
+  position: absolute;
+  left: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
+.viz__buckets {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.bucket {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border: 1px solid var(--border-soft);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+
+/* Cubeta a la que Bit lleva (o de la que recoge) un número en este paso */
+.bucket.is-active {
+  border-color: color-mix(in oklab, var(--new) 70%, var(--border));
+  background-color: color-mix(in oklab, var(--new) 8%, transparent);
+}
+
+.bucket.is-active span { color: var(--new); font-weight: 600; }
+
+.bucket span {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
